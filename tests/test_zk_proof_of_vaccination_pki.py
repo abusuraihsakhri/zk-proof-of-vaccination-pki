@@ -63,3 +63,41 @@ def test_supervisor_consensus_and_audit():
     assert main(["audit", "--task-id", "CLI-TEST-01"]) == 0
     assert main(["chat", "Explain", "specifications"]) == 0
     assert main(["verify-audit"]) == 0
+
+
+def test_path_traversal_prevention():
+    """Identifiers must not contain path traversal characters."""
+    import pytest
+    from pydantic import ValidationError
+
+    with pytest.raises(ValidationError):
+        SystemTaskPayload(task_id="../etc/passwd", target_identifier="KEY-01", primary_metric=10.0)
+
+    with pytest.raises(ValidationError):
+        SystemTaskPayload(task_id="T1", target_identifier="..\\windows\\system32", primary_metric=10.0)
+
+
+def test_nan_metric_rejection():
+    """NaN metric values must be rejected."""
+    import pytest
+    from pydantic import ValidationError
+
+    with pytest.raises(ValidationError):
+        SystemTaskPayload(task_id="T1", target_identifier="KEY-01", primary_metric=float("nan"))
+
+
+def test_extreme_metric_rejection():
+    """Extremely large metric values must be rejected."""
+    import pytest
+    from pydantic import ValidationError
+
+    with pytest.raises(ValidationError):
+        SystemTaskPayload(task_id="T1", target_identifier="KEY-01", primary_metric=1e10)
+
+
+def test_phi_redaction():
+    """PHIGuard.redact_phi should replace sensitive patterns."""
+    redacted = PHIGuard.redact_phi("Contact patient at 555-123-4567 or test@example.com")
+    assert "555-123-4567" not in redacted
+    assert "test@example.com" not in redacted
+    assert "[REDACTED_IDENTIFIER]" in redacted

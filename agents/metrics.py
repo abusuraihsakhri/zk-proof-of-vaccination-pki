@@ -1,7 +1,6 @@
 """
 Prometheus Operational Metrics Exporter for zk-proof-of-vaccination-pki.
 """
-import time
 from typing import Dict, Any
 
 class SystemMetricsCollector:

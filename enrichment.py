@@ -3,10 +3,8 @@ Enrichment Feature Implementation for zk-proof-of-vaccination-pki.
 Generated based on domain-specific requirements in specifications.
 """
 from dataclasses import dataclass, field
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Dict, Any, List, Optional
 import datetime
-import math
-import json
 
 # =============================================================================
 # 1. FEATURES
@@ -415,9 +413,9 @@ class ZkproofofvaccinationpkiEnrichmentSuite:
     """Master coordinator executing all enriched domain features."""
     def __init__(self):
         self.featuresengine = FeaturesEngine()
-        self.zkvaccinationcredent = ZkVaccinationCredentialWithoutIdentityDisclosureEngine()
+        self.zkvaccinationcredent_without_identity = ZkVaccinationCredentialWithoutIdentityDisclosureEngine()
         self.multivaccinezkcreden = MultivaccineZkCredentialWithSelectiveDisclosureEngine()
-        self.zkvaccinationcredent = ZkVaccinationCredentialWithExpiryVerificationEngine()
+        self.zkvaccinationcredent_expiry = ZkVaccinationCredentialWithExpiryVerificationEngine()
         self.batchvaccinationveri = BatchVaccinationVerificationForMassEventsEngine()
         self.zkvaccinationpasspor = ZkVaccinationPassportForInternationalTravelEngine()
         self.revocablezkvaccinati = RevocableZkVaccinationCredentialEngine()
@@ -426,9 +424,9 @@ class ZkproofofvaccinationpkiEnrichmentSuite:
     def execute_all(self, primary_val: float = 1.5, secondary_val: float = 0.5) -> Dict[str, Any]:
         results = {}
         results["FeaturesEngine"] = self.featuresengine.evaluate(primary_val, secondary_val)
-        results["ZkVaccinationCredentialWithoutIdentityDisclosureEngine"] = self.zkvaccinationcredent.evaluate(primary_val, secondary_val)
+        results["ZkVaccinationCredentialWithoutIdentityDisclosureEngine"] = self.zkvaccinationcredent_without_identity.evaluate(primary_val, secondary_val)
         results["MultivaccineZkCredentialWithSelectiveDisclosureEngine"] = self.multivaccinezkcreden.evaluate(primary_val, secondary_val)
-        results["ZkVaccinationCredentialWithExpiryVerificationEngine"] = self.zkvaccinationcredent.evaluate(primary_val, secondary_val)
+        results["ZkVaccinationCredentialWithExpiryVerificationEngine"] = self.zkvaccinationcredent_expiry.evaluate(primary_val, secondary_val)
         results["BatchVaccinationVerificationForMassEventsEngine"] = self.batchvaccinationveri.evaluate(primary_val, secondary_val)
         results["ZkVaccinationPassportForInternationalTravelEngine"] = self.zkvaccinationpasspor.evaluate(primary_val, secondary_val)
         results["RevocableZkVaccinationCredentialEngine"] = self.revocablezkvaccinati.evaluate(primary_val, secondary_val)
