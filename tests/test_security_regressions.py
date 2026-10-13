@@ -51,9 +51,9 @@ def test_csv_false_does_not_trigger_critical_flag(tmp_path, runner, summary_colu
     input_path = tmp_path / "in.csv"
     output_path = tmp_path / "out.csv"
     input_path.write_text(
-        "task_id,target_identifier,primary_metric,secondary_metric,is_critical_flag,status_descriptor\\n"
-        "T1,DEMO-1,10,4,False,NOMINAL\\n"
-        "T2,DEMO-2,10,4,True,NOMINAL\\n", encoding="utf-8"
+        "task_id,target_identifier,primary_metric,secondary_metric,is_critical_flag,status_descriptor\n"
+        "T1,DEMO-1,10,4,False,NOMINAL\n"
+        "T2,DEMO-2,10,4,True,NOMINAL\n", encoding="utf-8"
     )
     assert runner(["batch", "-i", str(input_path), "-o", str(output_path)]) == 0
     with output_path.open(newline="", encoding="utf-8") as handle:
