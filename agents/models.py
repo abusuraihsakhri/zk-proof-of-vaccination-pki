@@ -4,6 +4,7 @@ Domain: Post-Quantum Cryptography & Hardware Security
 Standard: NIST FIPS 203/204/205 / ISO/IEC 17825 Standards
 """
 import datetime
+import math
 from enum import Enum
 from typing import Dict, Any, List, Optional
 from pydantic import BaseModel, Field, field_validator
@@ -41,8 +42,8 @@ class SystemTaskPayload(BaseModel):
     @field_validator("primary_metric", "secondary_metric")
     @classmethod
     def _validate_metric_bounds(cls, v: float) -> float:
-        if v != v:  # NaN check
-            raise ValueError("Metric values must be finite numbers, not NaN")
+        if not math.isfinite(v):
+            raise ValueError("Metric values must be finite numbers")
         if abs(v) > 1e9:
             raise ValueError("Metric values must be within reasonable bounds (|v| < 1e9)")
         return v
