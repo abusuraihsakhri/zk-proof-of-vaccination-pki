@@ -105,6 +105,6 @@ class ZKHealthPassCoordinator:
         if "status" in q or "ledger" in q:
             return f"ZK-HealthPass: Anonymous Selective-Disclosure Credential Agent currently managing {len(self.execution_ledger)} execution tasks in air-gapped memory."
         elif "standard" in q or "spec" in q:
-            return "Active runtime operating strictly according to W3C Verifiable Credentials & BBS+ Signatures specifications."
+            return "W3C Verifiable Credentials & BBS+ Signatures are not implemented; this is a threshold-evaluation prototype."
         else:
-            return f"ZK-HealthPass: Anonymous Selective-Disclosure Credential Agent executive coordinator online. Zero-telemetry on-premises surveillance active."
+            return "ZK-HealthPass threshold-evaluation prototype. No credentials or zero-knowledge proofs are generated."

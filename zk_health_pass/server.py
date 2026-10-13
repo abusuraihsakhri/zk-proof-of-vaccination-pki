@@ -15,7 +15,7 @@ def create_app():
 
         app = FastAPI(
             title="ZK-HealthPass: Anonymous Selective-Disclosure Credential Agent",
-            description="Issues and verifies W3C Verifiable Credentials with BBS+ signatures, enabling patients to prove vaccination status without revealing name or DOB.",
+            description="Threshold-based demonstration; does not issue credentials or verify BBS+ signatures or zero-knowledge proofs.",
             version="2.0.0-FRONTIER",
         )
 
